@@ -55,7 +55,7 @@ public class Dungeon {
       System.out.println(p.getName());
       p.move(dungeon, p , scan);
       drawDungeon(dungeon);
-
+      System.out.println(p.toString());
      
     //  drawDungeon(dungeon);
    }
