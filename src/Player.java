@@ -4,50 +4,57 @@ public class Player extends Charact implements Movable{
     private int x = 0;
     private int y = 0;
     private char name;
-   // private int dx;
-    //private int dy;
-
     public Player(char name) {
         super(name);
         this.name = name;
     }
-    public void moveDown() {
-
-        setX(x+=1);
+    public void moveDown(char[][] ch) {
+        if(getX() < ch.length) {
+            setX(x+=1);
+        }
     }
     public void moveUp() {
-        setX(x-=1);
+        if(getX() > 0) {
+            setX(x-=1);
+        }
     }
     public void moveLeft() {
-        setY(y-=1);
+        if(getY() > 0) {
+            setY(y -= 1);
+        }
     }
-    public void moveRight() {
-        setY(y+=1);
+    public void moveRight(char[][] ch) {
+        if (getY() < ch.length) {
+            setY(y += 1);
+        }
     }
    @Override
    public void move(char[][] ch, Player pl, Scanner scan) {
        // user input directs player
-
-       while(true) {
            System.out.println("Pritisni gumb: ");
            String key = scan.nextLine();
-           //    moveDown(ch, pl, 0, 1);
-           if(key.equals("s")) moveDown();
-           if(key.equals("w")){
-               moveUp();       
+           char[] cha = key.toCharArray();
+           for(char c : cha) {
+
+             //maybe try polymorph here instead of switch
+              switch (c) {
+                  case 's':
+                      moveDown(ch);
+                      break;
+                  case 'a':
+                      moveLeft();
+                      break;
+                  case 'w':
+                      moveUp();
+                      break;
+                  case 'd':
+                      moveRight(ch);
+                      break;
+                  default:
+                      break;
+              }
            }
-           if(key.equals("a")){
-              moveLeft();
-           }
-           if(key.equals("d")){
-              moveRight();
-           }
-           if(key.equals("q")) {
-               break;
-           }
-       }
        ch[getX()][getY()] = pl.getName();
-       //System.out.println(toString());
    }
     public char getName() {
         return name;
@@ -69,9 +76,6 @@ public class Player extends Charact implements Movable{
     }
     @Override
     public String toString() {
-        return "Player pos: {" +
-                "x = " + x +
-                ", y = " + y +
-                '}';
+        return "Player pos: {" + "x = " + x + ", y = " + y + '}';
     }
 }
