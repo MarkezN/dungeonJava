@@ -1,15 +1,13 @@
 abstract class Charact {
-   private char name;
+    private char name;
 
     public Charact(char name) {
         this.name = name;
     }
-   
+
 
     @Override
     public String toString() {
-        return "Charact{" +
-                "name=" + name +
-                '}';
+        return "Charact{" + "name=" + name + '}';
     }
 }
