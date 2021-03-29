@@ -41,7 +41,6 @@ public class Player extends Charact implements Movable {
     @Override
     public void move(char[][] ch, Scanner scan) {
         // user input directs player
-        System.out.println("Pritisni gumb: ");
         String key = scan.nextLine();
         char[] cha = key.toCharArray();
 

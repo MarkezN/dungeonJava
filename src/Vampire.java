@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Vampire extends Charact implements Movable {
+public class Vampire extends Charact implements Movable{
     private int x = 0;
     private int y = 0;
     private char name;
