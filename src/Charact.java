@@ -5,7 +5,6 @@ abstract class Charact {
         this.name = name;
     }
 
-
     @Override
     public String toString() {
         return "Charact{" + "name=" + name + '}';

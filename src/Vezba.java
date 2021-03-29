@@ -7,9 +7,6 @@ public class Vezba {
 
         new Dungeon(10, 10, 5, 14, true).run();
 
-        //  Scanner scan = new Scanner(System.in);
-
-
     }
 
 }

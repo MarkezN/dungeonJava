@@ -52,6 +52,7 @@ public class Vampire extends Charact implements Movable{
         this.name = name;
     }
 
+
     @Override
     public String toString() {
         return getName() + " " +  getY() + " " + getX();
