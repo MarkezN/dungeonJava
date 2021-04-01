@@ -13,8 +13,7 @@ public class Dungeon {
     private int vampires;
     private int moves;
     private boolean vampiresMove;
-    // private ArrayList<Vampire> vampirus;
-    private Set<Vampire> vampirus;
+    private ArrayList<Vampire> vampirus;
 
     public Dungeon(int length, int width, int vampires, int moves, boolean vampiresMove) {
         this.length = length;
@@ -24,8 +23,11 @@ public class Dungeon {
         this.vampiresMove = vampiresMove;
         this.dungeon = new char[length][width];
         this.p = new Player('@');
-        this.vampirus = new HashSet<>();
+        this.vampirus = new ArrayList(this.vampires);
         this.scan = new Scanner(System.in);
+        dungeon[0][0] = p.getName();
+        makeVamp(vampirus);
+
     }
 
     public void drawDungeon(char[][] dungeon) {
@@ -49,14 +51,16 @@ public class Dungeon {
         }
     }
 
-    public void makeVamp(Set<Vampire> vampirus) {
+    public void makeVamp(ArrayList<Vampire> vampirus) {
         for (int i = 0; i < this.vampires; i++) {
-            Vampire v = new Vampire('v');
-            vampirus.add(v);
+            vampirus.add(new Vampire('v'));
+        }
+        for(Vampire v : this.vampirus) {
+            v.moveRandom(dungeon);
         }
     }
-
-    public void vampList(Set<Vampire> vampirus, Player p) {
+   
+    public void vampList(ArrayList<Vampire> vampirus, Player p) {
         for (Vampire v : vampirus) {
             System.out.println(v);
         }
@@ -64,18 +68,22 @@ public class Dungeon {
     }
 
     public void vampMove(char[][] dungeon) {
-        for (Vampire v : this.vampirus) {
-            v.move(dungeon, scan);
+        if (this.vampiresMove) {
+            for (Vampire v : this.vampirus) {
+                v.move(dungeon, scan);
+            }
         }
     }
-
     public void killVamp(Player p) {
         int px = p.getX();
         int py = p.getY();
-
-       // ArrayList<Vampire> toBeRemoved = new ArrayList();
-        this.vampirus.removeIf(v -> (v.getX() == px || v.getY() == py) || (v.getX() == px && v.getY() == py));
-
+        ArrayList<Vampire> toBeRemoved = new ArrayList();
+        for(Vampire v : this.vampirus) {
+            if((v.getX() == px && v.getY() == py)) {
+                toBeRemoved.add(v);
+            }
+        }
+            this.vampirus.removeAll(toBeRemoved);
     }
 
     public void printPmoves() {
@@ -84,25 +92,27 @@ public class Dungeon {
         System.out.println(p.toString());
     }
 
-
+    public void checkPos() {
+        for(int i = 0; i < this.vampirus.size() - 1; i ++) {
+            for(int j = i + 1; j < this.vampirus.size(); j ++) {
+                if(this.vampirus.get(i).coord().equals(this.vampirus.get(j).coord())) {
+                    this.vampirus.get(i).moveRandom(dungeon);
+                }
+            }
+        }
+    }
     public void run() {
-
-        //this method can be refactored :)
-        makeVamp(vampirus);
-
-        vampMove(dungeon);
 
         printPmoves();
         vampList(vampirus, p);
 
-        //   p.move(dungeon,scan);
-        p.moveStart(dungeon);
         System.out.println();
         this.moves--;
         while (this.moves >= 0) {
+            checkPos();
             if (this.vampirus.isEmpty()) {
                 drawDungeon(dungeon);
-                System.out.println("You won");
+                System.out.println("YOU WIN");
                 break;
             }
             drawDungeon(dungeon);
@@ -111,11 +121,10 @@ public class Dungeon {
             vampMove(dungeon);
             printPmoves();
             vampList(vampirus, p);
-            System.out.println();
+           // System.out.println();
             this.moves--;
 
         }
-        // System.out.println("You Won :)");
-        //System.out.println("Kraj");
+        System.out.println("YOU LOSE");
     }
 }

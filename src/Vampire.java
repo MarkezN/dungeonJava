@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,15 +18,36 @@ public class Vampire extends Charact implements Movable{
 
     @Override
     public void move(char[][] ch, Scanner scan) {
-                 //randomizirati koordinate i mozda posle stvoriti novi objekat sa novim koordinatama
-      //  this.x =
-           int start = 0;
-           int end = ch.length;
+         int direct = r.nextInt(4);
 
-           this.x = r.nextInt(end - start) + start;
-           this.y = r.nextInt(end - start) + start;
+         if(direct == 0) {
+             if(this.y > 0) {
+                 this.y--;
+             }
+         }
+         if(direct == 1) {
+             if(this.y < ch.length - 1) {
+                 this.y ++;
+             }
+         }
+         if(direct == 2) {
+             if(this.x > 0) {
+                 this.x --;
+             }
+         }
+         if(direct == 3) {
+             if(this.x < ch.length - 1) {
+                 this.x ++;
+             }
+         }
            ch[getX()][getY()] = getName();
-        
+    }
+
+    public void moveRandom(char[][] ch) {
+        int len = ch.length;
+        this.x = r.nextInt(len - 1);
+        this.y = r.nextInt(len - 1);
+        ch[getX()][getY()] = getName();
     }
 
     public int getX() {
@@ -52,7 +74,10 @@ public class Vampire extends Charact implements Movable{
         this.name = name;
     }
 
-
+   
+    public String coord() {
+        return this.x + "x" + this.y + "y";
+    }
     @Override
     public String toString() {
         return getName() + " " +  getY() + " " + getX();

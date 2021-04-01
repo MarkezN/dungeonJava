@@ -91,7 +91,7 @@ public class Player extends Charact implements Movable {
     public void setY(int y) {
         this.y = y;
     }
-
+    
     @Override
     public String toString() {
         return getName() + " " + y + " " + x;
