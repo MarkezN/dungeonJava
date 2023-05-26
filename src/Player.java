@@ -45,8 +45,6 @@ public class Player extends Charact implements Movable {
         char[] cha = key.toCharArray();
 
         for (char c : cha) {
-
-            //maybe try polymorph here instead of switch
             switch (c) {
                 case 's':
                     moveDown(ch);
